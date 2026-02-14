@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProPredict | Live Sports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-white font-sans">
+    <div class="max-w-4xl mx-auto p-6">
+        <h1 class="text-4xl font-black text-blue-500 mb-8 text-center">PRO<span class="text-white">PREDICT</span></h1>
+        
+        <div class="bg-slate-900 rounded-2xl p-4 mb-8 border border-slate-800">
+            <h2 class="font-bold mb-4 flex items-center"><span class="w-2 h-2 bg-red-500 rounded-full mr-2 animate-pulse"></span> Live Scores</h2>
+            <iframe src="https://www.livescore.bz/webmasters/scores" width="100%" height="400" frameborder="0" class="rounded-lg"></iframe>
+        </div>
+
+        <div class="bg-blue-600 p-8 rounded-3xl shadow-2xl">
+            <h2 class="text-2xl font-bold mb-4">Make Your Guess</h2>
+            <div class="space-y-4">
+                <input id="user" type="text" placeholder="Username" class="w-full p-4 rounded-xl bg-blue-700 border-none text-white placeholder-blue-300">
+                <div class="flex gap-4">
+                    <input id="h" type="number" placeholder="Home" class="w-1/2 p-6 text-3xl font-bold text-center text-slate-900 rounded-2xl">
+                    <input id="a" type="number" placeholder="Away" class="w-1/2 p-6 text-3xl font-bold text-center text-slate-900 rounded-2xl">
+                </div>
+                <button onclick="savePrediction()" class="w-full bg-slate-950 py-4 rounded-xl font-bold hover:bg-black transition">SUBMIT & VIEW ODDS</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function savePrediction() {
+            const payload = {
+                username: document.getElementById('user').value,
+                home: document.getElementById('h').value,
+                away: document.getElementById('a').value
+            };
+
+            const res = await fetch('/api/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                alert("Prediction Saved!");
+                // AFFILIATE REDIRECT: Make money by sending them to a bookie after they predict
+                window.location.href = "https://your-betting-link.com";
+            } else {
+                alert("Error saving prediction.");
+            }
+        }
+    </script>
+</body>
+</html>
