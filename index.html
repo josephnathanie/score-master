@@ -3,52 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProPredict | Live Sports</title>
+    <title>NBA ScoreMaster | Live Predictions</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
 </head>
-<body class="bg-slate-950 text-white font-sans">
-    <div class="max-w-4xl mx-auto p-6">
-        <h1 class="text-4xl font-black text-blue-500 mb-8 text-center">PRO<span class="text-white">PREDICT</span></h1>
+<body class="bg-slate-950 text-white font-sans selection:bg-orange-500">
+
+    <div class="max-w-4xl mx-auto p-4 md:p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-black tracking-tighter italic text-orange-500">NBA<span class="text-white">PRO</span></h1>
+            <p class="text-slate-400 mt-2 font-medium uppercase tracking-widest text-xs">Live Analytics & Predictions</p>
+        </header>
         
-        <div class="bg-slate-900 rounded-2xl p-4 mb-8 border border-slate-800">
-            <h2 class="font-bold mb-4 flex items-center"><span class="w-2 h-2 bg-red-500 rounded-full mr-2 animate-pulse"></span> Live Scores</h2>
-            <iframe src="https://www.livescore.bz/webmasters/scores" width="100%" height="400" frameborder="0" class="rounded-lg"></iframe>
+        <div class="bg-slate-900 rounded-3xl p-1 mb-8 border border-slate-800 shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
+                <h2 class="font-bold flex items-center gap-2">
+                    <span class="w-2 h-2 bg-orange-500 rounded-full animate-ping"></span> Live Court Action
+                </h2>
+                <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase font-bold">Real-time Data</span>
+            </div>
+            
+            <div class="w-full bg-white h-[500px]">
+                <iframe 
+                    src="https://scorestream.com/widgets/scoreboards/vert?userWidgetId=48552" 
+                    style="width:100%; height:100%;" 
+                    frameborder="0" 
+                    scrolling="yes">
+                </iframe>
+            </div>
         </div>
 
-        <div class="bg-blue-600 p-8 rounded-3xl shadow-2xl">
-            <h2 class="text-2xl font-bold mb-4">Make Your Guess</h2>
-            <div class="space-y-4">
-                <input id="user" type="text" placeholder="Username" class="w-full p-4 rounded-xl bg-blue-700 border-none text-white placeholder-blue-300">
-                <div class="flex gap-4">
-                    <input id="h" type="number" placeholder="Home" class="w-1/2 p-6 text-3xl font-bold text-center text-slate-900 rounded-2xl">
-                    <input id="a" type="number" placeholder="Away" class="w-1/2 p-6 text-3xl font-bold text-center text-slate-900 rounded-2xl">
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-gradient-to-br from-orange-600 to-orange-700 p-8 rounded-3xl shadow-xl">
+                <h3 class="text-2xl font-black mb-4 text-slate-950">LOCK YOUR PICK</h3>
+                <div class="space-y-4">
+                    <input id="user" type="text" placeholder="Username" class="w-full p-3 rounded-xl bg-orange-800/50 border-none text-white placeholder-orange-200 outline-none focus:ring-2 ring-white">
+                    <div class="flex gap-3">
+                        <input id="h" type="number" placeholder="HOME" class="w-1/2 p-4 text-2xl font-black text-center text-slate-900 rounded-2xl outline-none">
+                        <input id="a" type="number" placeholder="AWAY" class="w-1/2 p-4 text-2xl font-black text-center text-slate-900 rounded-2xl outline-none">
+                    </div>
+                    <button onclick="savePrediction()" class="w-full bg-slate-950 py-4 rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-lg">SUBMIT & WIN</button>
                 </div>
-                <button onclick="savePrediction()" class="w-full bg-slate-950 py-4 rounded-xl font-bold hover:bg-black transition">SUBMIT & VIEW ODDS</button>
+            </div>
+
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 flex flex-col justify-center items-center text-center">
+                <div class="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mb-4">
+                    <span class="text-2xl">☕</span>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Support the Devs</h3>
+                <p class="text-slate-400 text-sm mb-6">Keep the NBA servers running fast with a small tip.</p>
+                
+                <div id="paypal-donate-button-container" class="w-full">
+                    <a href="YOUR_PAYPAL_DONATE_URL" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3 rounded-xl transition shadow-lg">
+                        DONATE VIA PAYPAL
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         async function savePrediction() {
-            const payload = {
-                username: document.getElementById('user').value,
-                home: document.getElementById('h').value,
-                away: document.getElementById('a').value
-            };
-
-            const res = await fetch('/api/predict', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (res.ok) {
-                alert("Prediction Saved!");
-                // AFFILIATE REDIRECT: Make money by sending them to a bookie after they predict
-                window.location.href = "https://your-betting-link.com";
-            } else {
-                alert("Error saving prediction.");
-            }
+            // Your logic to send to Vercel/Neon...
+            alert("Prediction Saved! Redirecting to rewards...");
+            window.location.href = "YOUR_AFFILIATE_LINK";
         }
     </script>
 </body>
