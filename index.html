@@ -3,75 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA ScoreMaster | Live Predictions</title>
+    <title>NBA ScoreMaster | Gemini AI Analysis</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom scrollbar for a cleaner look */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-    </style>
 </head>
 <body class="bg-slate-950 text-white font-sans selection:bg-orange-500">
 
     <div class="max-w-4xl mx-auto p-4 md:p-8">
         <header class="text-center mb-10">
             <h1 class="text-5xl font-black tracking-tighter italic text-orange-500">NBA<span class="text-white">PRO</span></h1>
-            <p class="text-slate-400 mt-2 font-medium uppercase tracking-widest text-xs">Live Analytics & Predictions</p>
+            <p class="text-slate-400 mt-2 font-medium uppercase tracking-widest text-xs">AI-Powered Predictions</p>
         </header>
         
         <div class="bg-slate-900 rounded-3xl p-1 mb-8 border border-slate-800 shadow-2xl overflow-hidden">
             <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
-                <h2 class="font-bold flex items-center gap-2">
-                    <span class="w-2 h-2 bg-orange-500 rounded-full animate-ping"></span> Live Court Action
-                </h2>
-                <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase font-bold">Real-time Data</span>
+                <h2 class="font-bold flex items-center gap-2">🏀 Live NBA Action</h2>
             </div>
-            
             <div class="w-full bg-white h-[500px]">
-                <iframe 
-                    src="https://scorestream.com/widgets/scoreboards/vert?userWidgetId=48552" 
-                    style="width:100%; height:100%;" 
-                    frameborder="0" 
-                    scrolling="yes">
-                </iframe>
+                <iframe src="https://scorestream.com/widgets/scoreboards/vert?userWidgetId=48552" style="width:100%; height:100%;" frameborder="0"></iframe>
             </div>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6">
-            <div class="bg-gradient-to-br from-orange-600 to-orange-700 p-8 rounded-3xl shadow-xl">
-                <h3 class="text-2xl font-black mb-4 text-slate-950">LOCK YOUR PICK</h3>
+            <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl shadow-xl">
+                <h3 class="text-2xl font-black mb-4 text-orange-500 italic">LOCK YOUR PICK</h3>
                 <div class="space-y-4">
-                    <input id="user" type="text" placeholder="Username" class="w-full p-3 rounded-xl bg-orange-800/50 border-none text-white placeholder-orange-200 outline-none focus:ring-2 ring-white">
+                    <input id="user" type="text" placeholder="Username" class="w-full p-3 rounded-xl bg-slate-800 border border-slate-700 text-white outline-none focus:ring-2 ring-orange-500">
                     <div class="flex gap-3">
-                        <input id="h" type="number" placeholder="HOME" class="w-1/2 p-4 text-2xl font-black text-center text-slate-900 rounded-2xl outline-none">
-                        <input id="a" type="number" placeholder="AWAY" class="w-1/2 p-4 text-2xl font-black text-center text-slate-900 rounded-2xl outline-none">
+                        <input id="h" type="number" placeholder="HOME" class="w-1/2 p-4 text-2xl font-black text-center text-slate-900 rounded-2xl">
+                        <input id="a" type="number" placeholder="AWAY" class="w-1/2 p-4 text-2xl font-black text-center text-slate-900 rounded-2xl">
                     </div>
-                    <button onclick="savePrediction()" class="w-full bg-slate-950 py-4 rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-lg">SUBMIT & WIN</button>
+                    <button id="submitBtn" onclick="savePrediction()" class="w-full bg-orange-600 py-4 rounded-xl font-bold hover:bg-orange-500 transition-all shadow-lg text-slate-900">GET AI ANALYSIS</button>
+                </div>
+
+                <div id="ai-box" class="hidden mt-6 p-4 bg-slate-800 rounded-xl border-l-4 border-blue-500 animate-pulse-once">
+                    <h4 class="text-blue-400 font-bold text-xs mb-2">GEMINI AI INSIGHT:</h4>
+                    <p id="ai-text" class="text-sm text-slate-300 italic"></p>
                 </div>
             </div>
 
             <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 flex flex-col justify-center items-center text-center">
-                <div class="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mb-4">
-                    <span class="text-2xl">☕</span>
-                </div>
-                <h3 class="text-xl font-bold mb-2">Support the Devs</h3>
-                <p class="text-slate-400 text-sm mb-6">Keep the NBA servers running fast with a small tip.</p>
-                
-                <div id="paypal-donate-button-container" class="w-full">
-                    <a href="https://www.paypal.com/donate/?business=2VNS2NFTHV6AG&no_recurring=0&currency_code=USD" target="_blank" class="block w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3 rounded-xl transition shadow-lg">
-                        DONATE VIA PAYPAL
-                    </a>
-                </div>
+                <div class="w-16 h-16 bg-orange-500/10 rounded-full flex items-center justify-center mb-4 text-2xl">☕</div>
+                <h3 class="text-xl font-bold mb-2">Support the Servers</h3>
+                <p class="text-slate-400 text-sm mb-6">Tips keep the AI sharp and the scores live.</p>
+                <a href="https://www.paypal.com/donate/?business=2VNS2NFTHV6AG&no_recurring=0&currency_code=USD" target="_blank" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3 rounded-xl transition shadow-lg text-center">DONATE VIA PAYPAL</a>
             </div>
         </div>
     </div>
 
     <script>
         async function savePrediction() {
-            // Your logic to send to Vercel/Neon...
-            alert("Prediction Saved! Redirecting to rewards...");
-            window.location.href = "YOUR_AFFILIATE_LINK";
+            const btn = document.getElementById('submitBtn');
+            const aiBox = document.getElementById('ai-box');
+            const aiText = document.getElementById('ai-text');
+            
+            btn.innerText = "GEMINI IS THINKING...";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: document.getElementById('user').value,
+                        home: document.getElementById('h').value,
+                        away: document.getElementById('a').value
+                    })
+                });
+
+                const data = await response.json();
+                
+                aiBox.classList.remove('hidden');
+                aiText.innerText = data.analysis;
+                btn.innerText = "PICK ANALYZED";
+            } catch (err) {
+                alert("Connection failed.");
+                btn.disabled = false;
+                btn.innerText = "TRY AGAIN";
+            }
         }
     </script>
 </body>
